@@ -44,7 +44,7 @@
                         <tr>
                             <td>{{ $post['id'] }}</td>
                             <td>{{ $post['title'] }}</td>
-                            <td>{!! $post['content'] !!}</td>
+                            <td>{!! getShorterString($post['content'], 50) !!}</td>
                             <td><img src="{{ asset('/storage/images/posts_images/'.$post['image_url']) }}" alt="{{ $post['image_url'] }}" width="100"></td>
                             <td>{{ $post->user['name'] }}</td>
                             <td>
