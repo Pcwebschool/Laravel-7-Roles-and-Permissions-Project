@@ -140,7 +140,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\wamp64\www\MyWebApp\resources\js\admin\sb-admin.js */"./resources/js/admin/sb-admin.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Laravel-MyWebApp\resources\js\admin\sb-admin.js */"./resources/js/admin/sb-admin.js");
 
 
 /***/ })

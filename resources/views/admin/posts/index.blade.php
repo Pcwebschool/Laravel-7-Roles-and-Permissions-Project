@@ -73,7 +73,7 @@
             <div class="modal-body">Select "delete" If you realy want to delete this post.</div>
             <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" action="/posts/{{$post->id}}">
+            <form method="POST" action="/posts/">
                 @method('DELETE')
                 @csrf
                 <input type="hidden" id="post_id" name="post_id" value="">

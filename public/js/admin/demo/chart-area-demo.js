@@ -156,7 +156,7 @@ var myLineChart = new Chart(ctx, {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\wamp64\www\MyWebApp\resources\js\admin\demo\chart-area-demo.js */"./resources/js/admin/demo/chart-area-demo.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Laravel-MyWebApp\resources\js\admin\demo\chart-area-demo.js */"./resources/js/admin/demo/chart-area-demo.js");
 
 
 /***/ })

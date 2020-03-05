@@ -49505,9 +49505,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\MyWebApp\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\wamp64\www\MyWebApp\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\wamp64\www\MyWebApp\resources\sass\admin\sb-admin.scss */"./resources/sass/admin/sb-admin.scss");
+__webpack_require__(/*! C:\wamp64\www\Laravel-MyWebApp\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\wamp64\www\Laravel-MyWebApp\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Laravel-MyWebApp\resources\sass\admin\sb-admin.scss */"./resources/sass/admin/sb-admin.scss");
 
 
 /***/ })
