@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('id', 'desc')->simplePaginate(3);
 
         return view('welcome', ['posts' => $posts]);
     }
