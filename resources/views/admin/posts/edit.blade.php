@@ -4,6 +4,12 @@
 
 <h1>Update the Post</h1>
 
+@canany(['isAdmin', 'isContentEditor'])
+<div class="publish-checkbox" style="float:right">
+    <label for="publish-post">Publish Post</label>
+    <input type="checkbox" id="publish-post" {{$post->published ? 'checked=checked' : '' }}>
+</div>
+@endcanany
 @if ($errors->any())
     <div class="alert alert-danger" role="alert">
         <ul>
@@ -61,6 +67,33 @@
             });
 
         });
+
+        $(document).ready(function(){    
+            $('#publish-post').on('click', function(event) {
+                // event.preventDefault();
+
+                if ($("#publish-post").is(":checked")){
+                    var checked = 1;
+                }else{
+                    var checked = 0;
+                }
+                $.ajax({
+                    url: "/posts/{{$post->id}}",
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        task: {
+                            id: "{{$post->id}}",
+                            checked: checked
+                        }
+                    }
+                }).done(function(data) {
+                    console.log(data);
+                });
+            });
+            
+        });
+
 
     </script>
     

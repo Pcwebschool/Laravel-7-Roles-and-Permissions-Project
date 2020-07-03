@@ -23,6 +23,8 @@
   <!--CKEditor Plugin-->
   <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 
+  @yield('css_role_page')
+
 </head>
 
 <body id="page-top">
@@ -52,6 +54,9 @@
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle fa-fw"></i>
+          @auth
+          {{ Auth::user()->name }} {{ Auth::user()->roles->isNotEmpty() ? Auth::user()->roles->first()->name : "" }}
+          @endauth
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
           <div class="dropdown-divider"></div>
@@ -72,16 +77,32 @@
           <span>Dashboard</span>
         </a>
       </li>
+      @can('isAdmin')
+        <li class="nav-item">
+          <a class="nav-link" href="/roles">
+            <i class="fa fa-unlock-alt"></i>
+            <span>Roles</span></a>
+        </li>
+      @endcan
+      @canany(['isAdmin','isManager'])
+        <li class="nav-item">
+          <a class="nav-link" href="/users">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Users</span></a>
+        </li>
+      @endcanany
       <li class="nav-item">
         <a class="nav-link" href="/posts">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Posts</span></a>
       </li>
+      @role('manager,content-editor')
       <li class="nav-item">
-        <a class="nav-link" href="/users">
-          <i class="fas fa-fw fa-table"></i>
-          <span>User</span></a>
+        <a class="nav-link" href="/posts">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Test</span></a>
       </li>
+      @endrole
     </ul>
 
     <div id="content-wrapper">
@@ -150,7 +171,7 @@
   <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Page level plugin JavaScript-->
-  <script src="/vendor/chart.js/Chart.min.js"></script>
+  
   <script src="/vendor/datatables/jquery.dataTables.js"></script>
   <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 
@@ -159,9 +180,11 @@
 
   <!-- Demo scripts for this page-->
   <script src="/js/admin/demo/datatables-demo.js"></script>
-  <script src="/js/admin/demo/chart-area-demo.js"></script>
+ 
     
   @yield('js_post_page')
+  @yield('js_user_page') 
+  @yield('js_role_page') 
   </body>
     
 </html>

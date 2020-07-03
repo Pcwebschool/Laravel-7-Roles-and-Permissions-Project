@@ -6,9 +6,13 @@
         <div class="col-md-6">
             <h2>This is Post List</h2>
         </div>
-        <div class="col-md-6">
-            <a href="/posts/create" class="btn btn-primary btn-lg float-md-right" role="button" aria-pressed="true">Create New Post</a>
-        </div>
+        @cannot('isManager')
+            @can('create', App\Post::class)
+            <div class="col-md-6">
+                <a href="/posts/create" class="btn btn-primary btn-lg float-md-right" role="button" aria-pressed="true">Create New Post</a>
+            </div>
+            @endcan
+        @endcannot
     </div>
 
     <!-- DataTables Example -->
@@ -48,8 +52,22 @@
                             <td><img src="{{ asset('/storage/images/posts_images/'.$post['image_url']) }}" alt="{{ $post['image_url'] }}" width="100"></td>
                             <td>{{ $post->user['name'] }}</td>
                             <td>
-                                <a href="/posts/{{ $post['id'] }}/edit"><i class="fa fa-edit"></i></a>
-                            <a href="#"  data-toggle="modal" data-target="#deleteModal" data-postid="{{$post['id']}}"><i class="fas fa-trash-alt"></i></a>
+                                <a href="/posts/{{ $post['id'] }}"><i class="fa fa-eye"></i></a>
+
+                                @cannot('isManager')
+                                    @can('edit', $post)
+                                        <a href="/posts/{{ $post['id'] }}/edit"><i class="fa fa-edit"></i></a>
+                                    @endcan
+                                    @can('delete', $post)
+                                        <a href="#"  data-toggle="modal" data-target="#deleteModal" data-postid="{{$post['id']}}"><i class="fas fa-trash-alt"></i></a>
+                                    @endcan
+                                @endcannot
+
+                                @if ($post->published)                                     
+                                    <span>
+                                        <i class="fa fa-check-square" style="color:green"></i>                                                                                      
+                                    </span>
+                                @endif                                                       
                             </td>
                         </tr>
                     @endforeach
@@ -93,7 +111,8 @@
             var post_id = button.data('postid') 
             
             var modal = $(this)
-            modal.find('.modal-footer #post_id').val(post_id)
+            modal.find('.modal-footer #post_id').val(post_id);
+            modal.find('form').attr('action','/posts/' + post_id);
         })
     </script>
 @endsection

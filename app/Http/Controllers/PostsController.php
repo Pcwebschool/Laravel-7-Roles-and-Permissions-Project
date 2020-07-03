@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostsController extends Controller
 {
@@ -25,8 +26,13 @@ class PostsController extends Controller
     public function index()
     {
 
-        $posts = Post::orderBy('id', 'desc')
-                    ->get();
+        if(!\Auth::user()->hasRole('admin') && !\Auth::user()->hasRole('manager') && !\Auth::user()->hasRole('content-editor') ){
+            $posts = Post::where('userId', \Auth::user()->id)->orderBy('id', 'desc')
+            ->get();
+        }else{
+            $posts = Post::orderBy('id', 'desc')->get();
+        }
+
 
         return view('admin.posts.index', ['posts' => $posts]);
     }
@@ -38,6 +44,7 @@ class PostsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Post::class);
         //call the view admin.posts.create 
         return view('admin.posts.create');
     }
@@ -85,7 +92,7 @@ class PostsController extends Controller
 
         $post->save();
 
-        return redirect('/posts');
+        return redirect('/posts')->with('success', 'Post Created Successfully!');
     }
 
     /**
@@ -94,9 +101,18 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
-        //
+        if (\Request::ajax()){
+
+            $post = Post::find($request['task']['id']);
+            $post->published = $request['task']['checked'];
+            $post->save();
+
+            return $request;
+        }
+
+        return view('admin.posts.show', ['post'=>$post]);
     }
 
     /**
@@ -107,6 +123,8 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->authorize('edit', $post);
+
         //get the post with the id $post->idate
         $post = Post::find($post->id);
 
@@ -123,6 +141,13 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
+        $this->authorize('update', $post);
+
+        // if (Gate::denies('isAdmin')) {
+        //     abort(403);
+        // }
+
         //validate the field
         $data = request()->validate([
             'title' => 'required|max:255',
@@ -165,11 +190,13 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Post $post, Request $request)
     {
-
+        
         //find the post
         $post = Post::find($request->post_id);
+        
+        $this->authorize('delete', $post);
 
         $oldImage = public_path() . '/storage/images/posts_images/'. $post->image_url;
 

@@ -40,3 +40,5 @@ Route::get('admin', 'AdminController@index');
 // Route::delete('/posts/{post}', 'PostsController@destroy');
 
 Route::resource('posts', 'PostsController');
+Route::resource('users', 'UsersController')->middleware('role:admin,manager');
+Route::resource('roles', 'RolesController')->middleware('can:isAdmin');

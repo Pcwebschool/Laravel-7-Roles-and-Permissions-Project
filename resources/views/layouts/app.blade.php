@@ -35,6 +35,8 @@
     @include('partial.navbar')
   @endif
 
+  @include('flash-message')
+
   @yield('content')
 
 
