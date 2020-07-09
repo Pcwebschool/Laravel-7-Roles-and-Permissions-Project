@@ -3,6 +3,8 @@
 /public/storage
 /storage/*.key
 /vendor
+/BKP
+/BKP/*
 .env
 .env.backup
 .phpunit.result.cache
