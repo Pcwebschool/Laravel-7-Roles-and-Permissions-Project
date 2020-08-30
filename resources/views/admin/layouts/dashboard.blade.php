@@ -97,11 +97,11 @@
           <span>Posts</span></a>
       </li>
       @role('manager,content-editor')
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" href="/posts">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Test</span></a>
-      </li>
+      </li> --}}
       @endrole
     </ul>
 

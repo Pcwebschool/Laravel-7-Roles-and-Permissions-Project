@@ -6,9 +6,11 @@
     <div class="col-md-6">
         <h2>This is user List</h2>
     </div>
+    @cannot('isManager')
     <div class="col-md-6">
         <a href="/users/create" class="btn btn-primary btn-lg float-md-right" role="button" aria-pressed="true">Create New User</a>
     </div>
+    @endcannot
 </div>
 
 
@@ -71,7 +73,11 @@
                     <td>
                         <a href="/users/{{ $user['id'] }}"><i class="fa fa-eye"></i></a>
                         <a href="/users/{{ $user['id'] }}/edit"><i class="fa fa-edit"></i></a>
-                        <a href="#" data-toggle="modal" data-target="#deleteModal" data-userid="{{$user['id']}}"><i class="fas fa-trash-alt"></i></a>
+                        {{-- @cannot('isManager') --}}
+                            {{-- @can('delete-user', $user) --}}
+                                <a href="#" data-toggle="modal" data-target="#deleteModal" data-userid="{{$user['id']}}"><i class="fas fa-trash-alt"></i></a>
+                            {{-- @endcan --}}
+                        {{-- @endcannot --}}
                     </td>
                 </tr>
                 @endforeach

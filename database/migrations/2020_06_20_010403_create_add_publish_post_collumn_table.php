@@ -14,7 +14,7 @@ class CreateAddPublishPostCollumnTable extends Migration
     public function up()
     {
         Schema::table('Posts', function (Blueprint $table) {
-            $table->integer('published')->default(0);
+            $table->bigInteger('published')->default(0);
         });
     }
 
